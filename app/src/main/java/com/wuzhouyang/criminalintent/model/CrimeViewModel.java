@@ -16,15 +16,15 @@ public class CrimeViewModel extends ViewModel {
         this.crimeRepository = crimeRepository;
     }
 
-    public void insertData() {
+    public void insertCrimeData() {
         int i;
         for (i = 0; i < 100; i++) {
-//            this.crimeRepository.insertCrime(new Crime("数据" + i, i % 2 == 0, new Date()));
-            this.crimeRepository.getCrimeDatabase().crimeDao().insert(new Crime("数据" + i, i % 2 == 0, new Date()));
+//            this.crimeRepository.insertCrimeCrime(new Crime("数据" + i, i % 2 == 0, new Date()));
+            this.crimeRepository.getCrimeDatabase().crimeDao().insertCrime(new Crime("啦啦啦" + i, i % 2 == 0, new Date()));
         }
     }
 
-    public LiveData<List<Crime>> getCrimes() {
+    public List<Crime> getCrimes() {
         return crimeRepository.getCrimeDatabase().crimeDao().getCrimes();
     }
 

@@ -15,7 +15,7 @@ public class CrimeRepository {
     private final CrimeDatabase crimeDatabase;
 
     private CrimeRepository(Context context) {
-        this.crimeDatabase = Room.databaseBuilder(context, CrimeDatabase.class, "crime").build();
+        this.crimeDatabase = Room.databaseBuilder(context, CrimeDatabase.class, "crime").allowMainThreadQueries().build();
     }
 
     public static synchronized CrimeRepository getInstance(Context context) {

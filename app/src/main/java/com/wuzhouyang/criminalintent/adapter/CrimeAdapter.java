@@ -20,9 +20,9 @@ import java.util.Objects;
 
 public class CrimeAdapter extends RecyclerView.Adapter<CrimeAdapter.ViewHolder> {
 
-    private LiveData<List<Crime>> crimes;
+    private final List<Crime> crimes;
 
-    public CrimeAdapter(LiveData<List<Crime>> crimes) {
+    public CrimeAdapter(List<Crime> crimes) {
         this.crimes = crimes;
     }
 
@@ -36,13 +36,13 @@ public class CrimeAdapter extends RecyclerView.Adapter<CrimeAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Crime crime = Objects.requireNonNull(crimes.getValue()).get(position);
+        Crime crime = Objects.requireNonNull(crimes.get(position));
         holder.bind(crime);
     }
 
     @Override
     public int getItemCount() {
-        return Objects.requireNonNull(crimes.getValue()).size();
+        return crimes.size();
     }
 
 

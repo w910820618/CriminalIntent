@@ -45,8 +45,8 @@ public class CrimeListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         crimeViewModel = new CrimeViewModel(CrimeRepository.getInstance(getActivity().getApplication()));
-        crimeViewModel.insertData();
-        Log.d(TAG, "Total crimes: " + Objects.requireNonNull(crimeViewModel.getCrimes().getValue()).size());
+        crimeViewModel.insertCrimeData();
+        Log.d(TAG, "Total crimes: " + crimeViewModel.getCrimes().size());
     }
 
     @Override

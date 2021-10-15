@@ -15,11 +15,11 @@ import java.util.UUID;
 public interface CrimeDao {
 
     @Query("SELECT * from crime")
-    LiveData<List<Crime>> getCrimes();
+    List<Crime> getCrimes();
 
     @Query("SELECT * FROM crime where id=(:id)")
     LiveData<Crime> getCrime(UUID id);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    Void insert(Crime crime);
+    Void insertCrime(Crime crime);
 }
