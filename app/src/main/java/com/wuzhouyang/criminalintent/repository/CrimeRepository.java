@@ -1,31 +1,37 @@
 package com.wuzhouyang.criminalintent.repository;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.wuzhouyang.criminalintent.database.CrimeDao;
 import com.wuzhouyang.criminalintent.database.CrimeDatabase;
+import com.wuzhouyang.criminalintent.model.Crime;
+
+import java.util.List;
 
 public class CrimeRepository {
-    @SuppressLint("StaticFieldLeak")
-    private static CrimeRepository mInstance;
+    private CrimeDao crimeDao;
+    private LiveData<List<Crime>> crimes;
 
-    private final CrimeDatabase crimeDatabase;
-
-    private CrimeRepository(Context context) {
-        this.crimeDatabase = Room.databaseBuilder(context, CrimeDatabase.class, "crime").allowMainThreadQueries().build();
+    public CrimeRepository(Application application) {
+        CrimeDatabase crimeDatabase = CrimeDatabase.getDatabase(application);
+        crimeDao = crimeDatabase.crimeDao();
+        crimes = crimeDao.getCrimes();
     }
 
-    public static synchronized CrimeRepository getInstance(Context context) {
-        if (mInstance == null) {
-            mInstance = new CrimeRepository(context);
-        }
-        return mInstance;
+
+    public LiveData<List<Crime>> getCrimes() {
+        return crimes;
     }
 
-    public CrimeDatabase getCrimeDatabase() {
-        return crimeDatabase;
+    public void insert(Crime crime) {
+        CrimeDatabase.databaseWriteExecutor.execute(() -> {
+            crimeDao.insertCrime(crime);
+        });
     }
 }

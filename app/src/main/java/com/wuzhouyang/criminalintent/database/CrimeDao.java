@@ -2,6 +2,7 @@ package com.wuzhouyang.criminalintent.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -15,11 +16,14 @@ import java.util.UUID;
 public interface CrimeDao {
 
     @Query("SELECT * from crime")
-    List<Crime> getCrimes();
+   LiveData<List<Crime>> getCrimes();
 
     @Query("SELECT * FROM crime where id=(:id)")
     LiveData<Crime> getCrime(UUID id);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    Void insertCrime(Crime crime);
+    void insertCrime(Crime crime);
+
+    @Query("DELETE FROM crime")
+    void deleteAll();
 }

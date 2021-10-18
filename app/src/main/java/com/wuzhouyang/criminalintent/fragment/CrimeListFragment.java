@@ -1,22 +1,23 @@
 package com.wuzhouyang.criminalintent.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wuzhouyang.criminalintent.R;
 import com.wuzhouyang.criminalintent.adapter.CrimeAdapter;
-import com.wuzhouyang.criminalintent.CrimeApplication;
+import com.wuzhouyang.criminalintent.model.Crime;
 import com.wuzhouyang.criminalintent.model.CrimeViewModel;
-import com.wuzhouyang.criminalintent.repository.CrimeRepository;
 
-import java.util.Objects;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,9 +45,9 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        crimeViewModel = new CrimeViewModel(CrimeRepository.getInstance(getActivity().getApplication()));
+        crimeViewModel = new CrimeViewModel(getActivity().getApplication());
         crimeViewModel.insertCrimeData();
-        Log.d(TAG, "Total crimes: " + crimeViewModel.getCrimes().size());
+//        Log.d(TAG, "Total crimes: " + crimeViewModel.getCrimes().size());
     }
 
     @Override
@@ -54,9 +55,18 @@ public class CrimeListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
         initView(view);
-        CrimeAdapter crimeAdapter = new CrimeAdapter(crimeViewModel.getCrimes());
-        crimeRecyclerView.setAdapter(crimeAdapter);
-        crimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+        CrimeViewModel crimeViewModel = new ViewModelProvider(
+                this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(CrimeViewModel.class);
+
+        crimeViewModel.getCrimes().observe(this, new Observer<List<Crime>>() {
+            @Override
+            public void onChanged(List<Crime> crimes) {
+                CrimeAdapter crimeAdapter = new CrimeAdapter(crimes);
+                crimeRecyclerView.setAdapter(crimeAdapter);
+                crimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+            }
+        });
+
         return view;
     }
 
