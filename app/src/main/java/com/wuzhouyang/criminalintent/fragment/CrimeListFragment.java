@@ -28,7 +28,7 @@ public class CrimeListFragment extends Fragment {
 
     private static final String TAG = "CrimeListFragment";
 
-    //    private CrimeListViewModel crimeViewModel;
+
     private CrimeViewModel crimeViewModel;
     private RecyclerView crimeRecyclerView;
 
@@ -47,7 +47,6 @@ public class CrimeListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         crimeViewModel = new CrimeViewModel(getActivity().getApplication());
         crimeViewModel.insertCrimeData();
-//        Log.d(TAG, "Total crimes: " + crimeViewModel.getCrimes().size());
     }
 
     @Override

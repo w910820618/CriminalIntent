@@ -1,5 +1,6 @@
 package com.wuzhouyang.criminalintent.adapter;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wuzhouyang.criminalintent.R;
@@ -57,7 +60,12 @@ public class CrimeAdapter extends RecyclerView.Adapter<CrimeAdapter.ViewHolder> 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(itemView.getContext(), "被点击了", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(itemView.getContext(), crimeTitle.getText() + "被点击了", Toast.LENGTH_SHORT).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("crimeTitle", crimeTitle.getText().toString());
+                    bundle.putString("crimeDate", crimeDate.getText().toString());
+                    NavController contorller = Navigation.findNavController(v);
+                    contorller.navigate(R.id.action_crimeListFragment_to_crimeFragment, bundle);
                 }
             });
             crimeTitle = itemView.findViewById(R.id.crime_title);

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 
@@ -19,16 +20,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.crimeListFragment);
 
-        if (currentFragment == null) {
-//            CrimeFragment crimeFragment = new CrimeFragment();
-            CrimeListFragment crimeListFragment = new CrimeListFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container, crimeListFragment)
-                    .commit();
-        }
+    }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        return Navigation.findNavController(this, R.id.nav_host_fragment).navigateUp();
     }
 }

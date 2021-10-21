@@ -14,9 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class CrimeViewModel extends AndroidViewModel {
-//    private final CrimeRepository crimeRepository;
-
-    private CrimeRepository crimeRepository;
+    private final CrimeRepository crimeRepository;
 
     public CrimeViewModel(@NonNull Application application) {
         super(application);
