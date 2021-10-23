@@ -64,6 +64,7 @@ public class CrimeAdapter extends RecyclerView.Adapter<CrimeAdapter.ViewHolder> 
                     Bundle bundle = new Bundle();
                     bundle.putString("crimeTitle", crimeTitle.getText().toString());
                     bundle.putString("crimeDate", crimeDate.getText().toString());
+
                     NavController contorller = Navigation.findNavController(v);
                     contorller.navigate(R.id.action_crimeListFragment_to_crimeFragment, bundle);
                 }

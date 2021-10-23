@@ -14,11 +14,17 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.wuzhouyang.criminalintent.R;
 import com.wuzhouyang.criminalintent.model.Crime;
 
+import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -29,7 +35,8 @@ public class CrimeFragment extends Fragment {
 
     private static final String TAG = "CrimeFragment";
 
-    private Crime crime;
+    private static final String DIALOG_DATE = "DialogDate";
+
     private EditText crimeTitle;
     private Button crimeDate;
     private CheckBox crimeSolved;
@@ -41,7 +48,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        crime = new Crime();
+
     }
 
     @Override
@@ -51,6 +58,23 @@ public class CrimeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_crime, container, false);
         initView(view);
         getFragmentArgument();
+        crimeDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerFragment dialog = DatePickerFragment.newInstance();
+
+
+                // 监听子fragment的返回值
+                getChildFragmentManager().setFragmentResultListener("date", dialog, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                    }
+                });
+                dialog.show(getChildFragmentManager(), "Date");
+            }
+
+        });
         return view;
     }
 
