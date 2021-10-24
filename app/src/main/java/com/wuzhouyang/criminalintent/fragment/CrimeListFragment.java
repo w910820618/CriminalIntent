@@ -45,8 +45,10 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        crimeViewModel = new CrimeViewModel(getActivity().getApplication());
-        crimeViewModel.insertCrimeData();
+        if (savedInstanceState == null) {
+            crimeViewModel = new CrimeViewModel(getActivity().getApplication());
+            crimeViewModel.insertCrimeData();
+        }
     }
 
     @Override

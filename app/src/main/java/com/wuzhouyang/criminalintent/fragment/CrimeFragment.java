@@ -24,6 +24,7 @@ import androidx.navigation.Navigation;
 import com.wuzhouyang.criminalintent.R;
 import com.wuzhouyang.criminalintent.model.Crime;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -40,6 +41,8 @@ public class CrimeFragment extends Fragment {
     private EditText crimeTitle;
     private Button crimeDate;
     private CheckBox crimeSolved;
+    private Crime crime;
+    private DatePickerFragment dialog;
 
     public CrimeFragment() {
     }
@@ -48,7 +51,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        // 监听子fragment的返回值
     }
 
     @Override
@@ -61,14 +64,13 @@ public class CrimeFragment extends Fragment {
         crimeDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                DatePickerFragment dialog = DatePickerFragment.newInstance();
-
-
-                // 监听子fragment的返回值
-                getChildFragmentManager().setFragmentResultListener("date", dialog, new FragmentResultListener() {
+                dialog = DatePickerFragment.getInstance(crime.getDate());
+                getChildFragmentManager().setFragmentResultListener("requestKey", dialog, new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        Calendar crimeDate = (Calendar) result.getSerializable("bundleKey");
+                        Date date = crimeDate.getTime();
+                        Log.d("CrimeFragment", date.toString());
                     }
                 });
                 dialog.show(getChildFragmentManager(), "Date");
@@ -80,9 +82,9 @@ public class CrimeFragment extends Fragment {
 
     private void getFragmentArgument() {
         if (getArguments() != null) {
-            Log.d(TAG, "getFragmentArgument: ");
-            crimeTitle.setText(getArguments().getString("crimeTitle"));
-            crimeDate.setText(getArguments().getString("crimeDate"));
+            crime = (Crime) getArguments().getSerializable("Crime");
+            crimeTitle.setText(crime.getTitle());
+            crimeDate.setText(crime.getDate().toString());
         }
     }
 

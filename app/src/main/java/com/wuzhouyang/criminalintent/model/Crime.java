@@ -9,11 +9,12 @@ import androidx.room.TypeConverters;
 
 import com.wuzhouyang.criminalintent.database.CrimeTypeConverters;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity(tableName = "crime")
-public class Crime {
+public class Crime implements Serializable {
 
     @PrimaryKey
     @NonNull
