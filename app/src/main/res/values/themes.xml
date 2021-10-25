@@ -14,6 +14,18 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="TitleTextSize" parent="@style/Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">#FFF</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+    </style>
+
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>  <!--讓跳出的選項視窗不會遮住Toolbar-->
+    </style>
+
     <style name="ZZBDatePickerDialogLStyle" parent="android:Theme.DeviceDefault.Light.Dialog">
         <item name="android:datePickerStyle">@style/ZZBDatePickerLStyle</item>
         <!-- 初始化的那一天和选中时的圆圈的颜色-->
